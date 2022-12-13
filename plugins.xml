@@ -1,0 +1,5 @@
+<library path="speak_ros_voicevox_plugin">
+	<class type="speak_ros_voicevox_plugin::VoiceVoxPlugin" base_class_type="speak_ros::SpeakROSPluginBase">
+		<description>VoiceVox plugin for speak_ros</description>
+	</class>
+</library>
