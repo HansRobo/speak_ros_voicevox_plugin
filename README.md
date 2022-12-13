@@ -17,7 +17,9 @@ docker run --rm --gpus all -p '127.0.0.1:50021:50021' voicevox/voicevox_engine:n
 
 2. Execute speak_ros with VoiceVox plugin
 
-TBD
+```bash
+ros2 run speak_ros speak_ros_node --ros-args -p plugin_name:=speak_ros_voicevox_plugin::VoiceVoxPlugin
+```
 
 3. Execute client
 
