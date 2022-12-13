@@ -1,0 +1,1 @@
+# speak_ros_voicevox_plugin
