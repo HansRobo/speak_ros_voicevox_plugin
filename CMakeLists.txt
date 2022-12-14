@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 project(speak_ros_voicevox_plugin)
 
 find_package(ament_cmake_auto REQUIRED)
+find_package(cpprestsdk REQUIRED)
 ament_auto_find_build_dependencies()
 
 add_library(${PROJECT_NAME} SHARED src/${PROJECT_NAME}.cpp)
@@ -14,6 +15,8 @@ ament_target_dependencies(${PROJECT_NAME}
   speak_ros
   pluginlib
 )
+
+target_link_libraries(${PROJECT_NAME} cpprestsdk::cpprest)
 
 pluginlib_export_plugin_description_file(speak_ros plugins.xml)
 
