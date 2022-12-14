@@ -11,6 +11,7 @@ git clone https://github.com/HansRobo/speak_ros
 git clone https://github.com/HansRobo/speak_ros_voicevox_plugin
 cd ..
 source /opt/ros/humble/setup.bash
+rosdep install -riy --from-paths src
 colcon build --symlink-install
 ```
 ## How to Use
