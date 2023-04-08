@@ -17,29 +17,39 @@
 
 #include <speak_ros/speak_ros_plugin_base.hpp>
 
-namespace voicevox_plugin
-{
-class VoiceVoxPlugin : public speak_ros::SpeakROSPluginBase
-{
+namespace voicevox_plugin {
+class VoiceVoxPlugin : public speak_ros::SpeakROSPluginBase {
 public:
   VoiceVoxPlugin() : speak_ros::SpeakROSPluginBase() {}
 
   std::string getPluginName() const override { return "voicevox_plugin"; }
 
-  std::filesystem::path generateSoundFile(
-    const std::string input_text, const std::filesystem::path output_directory,
-    const std::string file_name) override;
+  std::filesystem::path
+  generateSoundFile(const std::string input_text,
+                    const std::filesystem::path output_directory,
+                    const std::string file_name) override;
 
   std::vector<speak_ros::Parameter> getParametersDefault() const override;
 
-  void importParameters(const std::unordered_map<std::string, std::string> & parameters) override;
+  void importParameters(const std::unordered_map<
+                        std::string, std::variant<int, double, std::string>>
+                            &parameters) override;
 
-  std::string speaker_id;
+  int speaker;
   std::string host_name;
+  double speed_scale;
+  double pitch_scale;
+  double intensity_scale;
+  double volume_scale;
+  double pre_phoneme_length;
+  double post_phoneme_length;
+  int output_sampling_rate;
+  std::string output_stereo;
 };
-}  // namespace voicevox_plugin
+} // namespace voicevox_plugin
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(voicevox_plugin::VoiceVoxPlugin, speak_ros::SpeakROSPluginBase)
+PLUGINLIB_EXPORT_CLASS(voicevox_plugin::VoiceVoxPlugin,
+                       speak_ros::SpeakROSPluginBase)
 
-#endif  // SPEAK_ROS_VOICEVOX_PLUGIN__VOICEVOX_PLUGIN_HPP
+#endif // SPEAK_ROS_VOICEVOX_PLUGIN__VOICEVOX_PLUGIN_HPP
