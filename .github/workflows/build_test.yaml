@@ -31,7 +31,7 @@ jobs:
 
       - uses: actions/checkout@v4
         with:
-          path: ros2_ws/src
+          path: ros2_ws/src/speak_ros_voicevox_plugin
 
       - name: Run rosdep install
         run: |
