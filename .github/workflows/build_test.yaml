@@ -1,0 +1,48 @@
+name: build test
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  job:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container: ros:${{ matrix.rosdistro }}
+    env:
+      DEBIAN_FRONTEND: noninteractive
+    strategy:
+      fail-fast: false
+      matrix:
+        rosdistro: [humble, jazzy]
+    steps:
+      - name: Install wget
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget libcpprest-dev
+
+      - name: Clone dependency packages
+        run: |
+          mkdir -p ros2_ws/src
+          cd ros2_ws/src
+          git clone https://github.com/HansRobo/speak_ros.git
+        shell: bash
+
+      - uses: actions/checkout@v4
+        with:
+          path: ros2_ws/src/speak_ros_voicevox_plugin
+
+      - name: Run rosdep install
+        run: |
+          sudo apt-get -yqq update
+          rosdep update
+          rosdep install -yqq --from-paths ./ros2_ws/src --ignore-src --rosdistro ${{ matrix.rosdistro }}
+        shell: bash
+
+      - name: Build
+        run: |
+          cd ros2_ws/src
+          source /opt/ros/${{ matrix.rosdistro }}/setup.bash
+          colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+        shell: bash
