@@ -37,7 +37,7 @@ jobs:
         run: |
           sudo apt-get -yqq update
           rosdep update
-          rosdep install -yqq --from-paths ./src --ignore-src --rosdistro ${{ matrix.rosdistro }}
+          rosdep install -yqq --from-paths ./ros2_ws/src --ignore-src --rosdistro ${{ matrix.rosdistro }}
         shell: bash
 
       - name: Build
