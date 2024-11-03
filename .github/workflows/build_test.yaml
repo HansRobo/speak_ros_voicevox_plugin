@@ -17,8 +17,6 @@ jobs:
       matrix:
         rosdistro: [humble, jazzy]
     steps:
-      - uses: actions/checkout@v4
-
       - name: Install wget
         run: |
           sudo apt-get update
@@ -31,6 +29,10 @@ jobs:
           git clone https://github.com/HansRobo/speak_ros.git
         shell: bash
 
+      - uses: actions/checkout@v4
+        with:
+          path: ros2_ws/src
+
       - name: Run rosdep install
         run: |
           sudo apt-get -yqq update
@@ -40,6 +42,7 @@ jobs:
 
       - name: Build
         run: |
+          cd ros2_ws/src
           source /opt/ros/${{ matrix.rosdistro }}/setup.bash
           colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
         shell: bash
