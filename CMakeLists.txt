@@ -41,4 +41,8 @@ ament_export_targets(
   export_${PROJECT_NAME}
 )
 
-ament_auto_package()
+if($ENV{ROS_DISTRO} STREQUAL "humble" OR $ENV{ROS_DISTRO} STREQUAL "jazzy")
+  ament_auto_package(USE_SCOPED_HEADER_INSTALL_DIR)
+else()
+  ament_auto_package()
+endif()
